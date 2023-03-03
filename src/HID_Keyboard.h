@@ -20,8 +20,7 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef KEYBOARD_h
-#define KEYBOARD_h
+#pragma once
 
 #include <Arduino.h>
 
@@ -122,14 +121,14 @@ typedef struct
   uint8_t keys[6];
 } KeyReport;
 
-class Keyboard_ : public Print
+class HID_Keyboard : public Print
 {
-private:
+protected:
   KeyReport _keyReport;
   const uint8_t *_asciimap;
-  void sendReport(KeyReport* keys);
+  virtual void sendReport(KeyReport* keys) = 0;
 public:
-  Keyboard_(void);
+  HID_Keyboard(void);
   void begin(const uint8_t *layout = KeyboardLayout_en_US);
   void end(void);
   size_t write(uint8_t k);
@@ -138,6 +137,3 @@ public:
   size_t release(uint8_t k);
   void releaseAll(void);
 };
-extern Keyboard_ Keyboard;
-
-#endif

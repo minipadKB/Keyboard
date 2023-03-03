@@ -1,12 +1,12 @@
 #######################################
-# Syntax Coloring Map For Keyboard
+# Syntax Coloring Map
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-Keyboard	KEYWORD1
+HID_Keyboard	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)

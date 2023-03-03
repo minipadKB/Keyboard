@@ -28,28 +28,28 @@
 #include "class/hid/hid_device.h"
 
 // Weak function override to add our descriptor to the TinyUSB list
-void __USBInstallKeyboard() { /* noop */ }
+//void __USBInstallKeyboard() { /* noop */ }
 
 //================================================================================
 //================================================================================
 //  Keyboard
 
-Keyboard_::Keyboard_(void) 
+HID_Keyboard::HID_Keyboard(void) 
 {
 	bzero(&_keyReport, sizeof(_keyReport));
 	_asciimap = KeyboardLayout_en_US;
 }
 
-void Keyboard_::begin(const uint8_t *layout)
+void HID_Keyboard::begin(const uint8_t *layout)
 {
 	_asciimap = layout;
 }
 
-void Keyboard_::end(void)
+void HID_Keyboard::end(void)
 {
 }
-
-void Keyboard_::sendReport(KeyReport* keys)
+#if 0
+void HID_Keyboard::sendReport(KeyReport* keys)
 {
     CoreMutex m(&__usb_mutex);
     tud_task();
@@ -58,12 +58,12 @@ void Keyboard_::sendReport(KeyReport* keys)
     }
     tud_task();
 }
-
+#endif
 // press() adds the specified key (printing, non-printing, or modifier)
 // to the persistent key report and sends the report.  Because of the way
 // USB HID works, the host acts like the key remains pressed until we
 // call release(), releaseAll(), or otherwise clear the report and resend.
-size_t Keyboard_::press(uint8_t k)
+size_t HID_Keyboard::press(uint8_t k)
 {
 	uint8_t i;
 	if (k >= 136) {			// it's a non-printing key (not a modifier)
@@ -113,7 +113,7 @@ size_t Keyboard_::press(uint8_t k)
 // release() takes the specified key out of the persistent key report and
 // sends the report.  This tells the OS the key is no longer pressed and that
 // it shouldn't be repeated any more.
-size_t Keyboard_::release(uint8_t k)
+size_t HID_Keyboard::release(uint8_t k)
 {
 	uint8_t i;
 	if (k >= 136) {			// it's a non-printing key (not a modifier)
@@ -150,7 +150,7 @@ size_t Keyboard_::release(uint8_t k)
 	return 1;
 }
 
-void Keyboard_::releaseAll(void)
+void HID_Keyboard::releaseAll(void)
 {
 	_keyReport.keys[0] = 0;
 	_keyReport.keys[1] = 0;
@@ -162,7 +162,7 @@ void Keyboard_::releaseAll(void)
 	sendReport(&_keyReport);
 }
 
-size_t Keyboard_::write(uint8_t c)
+size_t HID_Keyboard::write(uint8_t c)
 {
 	uint8_t p = press(c);  // Keydown
 	delay(10);
@@ -171,7 +171,7 @@ size_t Keyboard_::write(uint8_t c)
 	return p;              // just return the result of press() since release() almost always returns 1
 }
 
-size_t Keyboard_::write(const uint8_t *buffer, size_t size) {
+size_t HID_Keyboard::write(const uint8_t *buffer, size_t size) {
 	size_t n = 0;
 	while (size--) {
 		if (*buffer != '\r') {
@@ -185,5 +185,3 @@ size_t Keyboard_::write(const uint8_t *buffer, size_t size) {
 	}
 	return n;
 }
-
-Keyboard_ Keyboard;
