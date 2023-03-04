@@ -34,19 +34,17 @@
 //================================================================================
 //  Keyboard
 
-HID_Keyboard::HID_Keyboard(void) 
-{
-	bzero(&_keyReport, sizeof(_keyReport));
-	_asciimap = KeyboardLayout_en_US;
+HID_Keyboard::HID_Keyboard(void) {
+    bzero(&_keyReport, sizeof(_keyReport));
+    _asciimap = KeyboardLayout_en_US;
+    _ledCB = nullptr;
 }
 
-void HID_Keyboard::begin(const uint8_t *layout)
-{
-	_asciimap = layout;
+void HID_Keyboard::begin(const uint8_t *layout) {
+    _asciimap = layout;
 }
 
-void HID_Keyboard::end(void)
-{
+void HID_Keyboard::end(void) {
 }
 #if 0
 void HID_Keyboard::sendReport(KeyReport* keys)
@@ -184,4 +182,9 @@ size_t HID_Keyboard::write(const uint8_t *buffer, size_t size) {
 		buffer++;
 	}
 	return n;
+}
+
+void HID_Keyboard::onLED(LedCallbackFcn fcn, void *cbData) {
+    _ledCB = fcn;
+    _ledCBdata = cbData;
 }

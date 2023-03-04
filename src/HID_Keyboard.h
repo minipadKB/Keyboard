@@ -136,4 +136,9 @@ public:
   size_t press(uint8_t k);
   size_t release(uint8_t k);
   void releaseAll(void);
+
+  typedef void(*LedCallbackFcn)(bool numlock, bool capslock, bool scrolllock, bool compose, bool kana, void *cbData);
+  void onLED(LedCallbackFcn fcn, void *cbData = nullptr);
+  LedCallbackFcn _ledCB;
+  void * _ledCBdata;
 };
