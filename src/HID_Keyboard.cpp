@@ -148,6 +148,18 @@ size_t HID_Keyboard::release(uint8_t k)
 	return 1;
 }
 
+size_t HID_Keyboard::consumerPress(uint16_t k)
+{
+    sendConsumerReport(k);
+    return 1;
+}
+
+size_t HID_Keyboard::consumerRelease()
+{
+    sendConsumerReport(0);
+    return 1;
+}
+
 void HID_Keyboard::releaseAll(void)
 {
 	_keyReport.keys[0] = 0;
