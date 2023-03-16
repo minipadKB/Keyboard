@@ -27,9 +27,6 @@
 #include "tusb.h"
 #include "class/hid/hid_device.h"
 
-// Weak function override to add our descriptor to the TinyUSB list
-//void __USBInstallKeyboard() { /* noop */ }
-
 //================================================================================
 //================================================================================
 //  Keyboard
@@ -46,17 +43,7 @@ void HID_Keyboard::begin(const uint8_t *layout) {
 
 void HID_Keyboard::end(void) {
 }
-#if 0
-void HID_Keyboard::sendReport(KeyReport* keys)
-{
-    CoreMutex m(&__usb_mutex);
-    tud_task();
-    if (tud_hid_ready()) {
-        tud_hid_keyboard_report(__USBGetKeyboardReportID(), keys->modifiers, keys->keys);
-    }
-    tud_task();
-}
-#endif
+
 // press() adds the specified key (printing, non-printing, or modifier)
 // to the persistent key report and sends the report.  Because of the way
 // USB HID works, the host acts like the key remains pressed until we
