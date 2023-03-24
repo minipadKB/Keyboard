@@ -51,7 +51,7 @@ void HID_Keyboard::setAutoReport(bool autoReport)
 
 void HID_Keyboard::sendReport()
 {
-    sendReport(&_autoReport);
+    sendReport_(&_keyReport);
 }
 
 // press() adds the specified key (printing, non-printing, or modifier)
@@ -103,7 +103,7 @@ size_t HID_Keyboard::press(uint8_t k)
 	}
 
     if(_autoReport)
-	    sendReport(&_keyReport);
+	    sendReport_(&_keyReport);
 	return 1;
 }
 
@@ -144,7 +144,7 @@ size_t HID_Keyboard::release(uint8_t k)
 	}
 
     if(_autoReport)
-	    sendReport(&_keyReport);
+	    sendReport_(&_keyReport);
 	return 1;
 }
 
@@ -171,7 +171,7 @@ void HID_Keyboard::releaseAll(void)
 	_keyReport.modifiers = 0;
 
     if(_autoReport)
-	    sendReport(&_keyReport);
+	    sendReport_(&_keyReport);
 }
 
 size_t HID_Keyboard::write(uint8_t c)

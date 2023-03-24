@@ -183,7 +183,7 @@ class HID_Keyboard : public Print
 protected:
   KeyReport _keyReport;
   const uint8_t *_asciimap;
-  virtual void sendReport(KeyReport* keys) = 0;
+  virtual void sendReport_(KeyReport* keys) = 0;
   virtual void sendConsumerReport(uint16_t key) = 0;
 
 private:
