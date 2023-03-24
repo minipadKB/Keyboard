@@ -49,6 +49,11 @@ void HID_Keyboard::setAutoReport(bool autoReport)
     _autoReport = autoReport;
 }
 
+void HID_Keyboard::sendReport()
+{
+    sendReport(&_autoReport);
+}
+
 // press() adds the specified key (printing, non-printing, or modifier)
 // to the persistent key report and sends the report.  Because of the way
 // USB HID works, the host acts like the key remains pressed until we

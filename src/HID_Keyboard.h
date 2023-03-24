@@ -199,6 +199,7 @@ public:
   size_t release(uint8_t k);
   void releaseAll(void);
   void setAutoReport(bool autoReport);
+  void sendReport();
   size_t consumerPress(uint16_t k);
   size_t consumerRelease();
 
