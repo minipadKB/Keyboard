@@ -44,6 +44,11 @@ void HID_Keyboard::begin(const uint8_t *layout) {
 void HID_Keyboard::end(void) {
 }
 
+void HID_Keyboard::setAutoReport(bool autoReport)
+{
+    _autoReport = autoReport;
+}
+
 // press() adds the specified key (printing, non-printing, or modifier)
 // to the persistent key report and sends the report.  Because of the way
 // USB HID works, the host acts like the key remains pressed until we
@@ -91,7 +96,9 @@ size_t HID_Keyboard::press(uint8_t k)
 			return 0;
 		}
 	}
-	sendReport(&_keyReport);
+
+    if(_autoReport)
+	    sendReport(&_keyReport);
 	return 1;
 }
 
@@ -131,7 +138,8 @@ size_t HID_Keyboard::release(uint8_t k)
 		}
 	}
 
-	sendReport(&_keyReport);
+    if(_autoReport)
+	    sendReport(&_keyReport);
 	return 1;
 }
 
@@ -156,7 +164,9 @@ void HID_Keyboard::releaseAll(void)
 	_keyReport.keys[4] = 0;
 	_keyReport.keys[5] = 0;
 	_keyReport.modifiers = 0;
-	sendReport(&_keyReport);
+
+    if(_autoReport)
+	    sendReport(&_keyReport);
 }
 
 size_t HID_Keyboard::write(uint8_t c)

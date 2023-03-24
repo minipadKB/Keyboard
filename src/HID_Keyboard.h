@@ -186,6 +186,9 @@ protected:
   virtual void sendReport(KeyReport* keys) = 0;
   virtual void sendConsumerReport(uint16_t key) = 0;
 
+private:
+  bool _autoReport;
+
 public:
   HID_Keyboard(void);
   void begin(const uint8_t *layout = KeyboardLayout_en_US);
@@ -195,6 +198,7 @@ public:
   size_t press(uint8_t k);
   size_t release(uint8_t k);
   void releaseAll(void);
+  void setAutoReport(bool autoReport);
   size_t consumerPress(uint16_t k);
   size_t consumerRelease();
 
